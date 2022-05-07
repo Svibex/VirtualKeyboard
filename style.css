@@ -1,3 +1,7 @@
+html {
+    background: #033069;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -8,18 +12,22 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 1300px;
+    background-color: #023f84;
+    border: 1px solid #42a2ba;
 }
 
 .row {
     display: flex;
+    width: 1000px;
+    justify-content: space-between;
 }
 
 .key {
     height: 20px;
-    background-color: yellow;
-    margin: 10px;
     padding: 10px;
+    border: 1px solid #1bd1fc;
+    color: #f3fbff;
+    background-color: #014b98;
 }
 
 .hidden {

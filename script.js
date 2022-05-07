@@ -263,6 +263,7 @@ const keys = [
 
 let lang = localStorage.getItem('lang') || 'rus';
 let capsLock = 'lowerCase';
+let value = ''
 const BODY = document.querySelector('body')
 const keyboard = document.createElement('div')
 const textArea = document.createElement('textarea')
@@ -302,6 +303,15 @@ function changeLanguage() {
         keyboard.appendChild(row)
     }
 
+textArea.addEventListener('input', e => value = e.target.value);
+onInput = () => textArea.value = value;
+
+keyboard.addEventListener('click', e => {
+    console.log(e.target.innerText);
+    value += e.target.innerText;
+    onInput();
+});
+
 function runOnKeys(func, ...codes) {
     let pressed = new Set();
 
@@ -331,9 +341,6 @@ runOnKeys(
     "ShiftLeft",
     "AltLeft"
 );
-
-textArea.addEventListener('input', e => value = e.target.value);
-onInput = () => textArea.value = value;
 
 
 
