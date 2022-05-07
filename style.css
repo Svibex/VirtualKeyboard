@@ -14,6 +14,21 @@ body {
     flex-direction: column;
     align-items: center;
     font-family: Lack, sans-serif;
+    color: #f3fbff;
+    margin: auto;
+}
+
+h1 {
+    margin-top: 50px;
+}
+
+h2 {
+    padding-top: 10px;
+}
+
+h2, h3 {
+    font-size: 20px;
+    margin: 10px;
 }
 
 .textarea {
@@ -38,13 +53,15 @@ body {
 
 .key {
     height: 20px;
-    padding: 10px;
-    border: 1px solid #1bd1fc;
-    color: #f3fbff;
+    min-width: 50px;
+    padding: 20px 0;
+    border: 2px solid #1bd1fc;
     background-color: #014b98;
+    border-radius: 15px 0 15px 0;
     flex-grow: 1;
     margin: 5px;
     text-align: center;
+    max-width: 150px;
 }
 
 .hidden {

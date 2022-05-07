@@ -112,8 +112,8 @@ const keys = [
         eng: {upperCase: '|', lowerCase: '&#92;'},
         keyCode: 'Backslash'
     }, {
-        rus: {upperCase: 'Del', lowerCase: 'Del'},
-        eng: {upperCase: 'Del', lowerCase: 'Del'},
+        rus: {upperCase: 'Delete', lowerCase: 'Delete'},
+        eng: {upperCase: 'Delete', lowerCase: 'Delete'},
         keyCode: 'Delete'
     },],
     [{
@@ -265,13 +265,26 @@ let lang = localStorage.getItem('lang') || 'rus';
 let capsLock = 'lowerCase';
 let value = ''
 const BODY = document.querySelector('body')
-const keyboard = document.createElement('div')
+const TITLE = document.createElement('h1')
 const textArea = document.createElement('textarea')
-keyboard.classList.add('keyboard')
+const keyboard = document.createElement('div')
+const DESCRIPTION = document.createElement('h2')
+const CHANGELANGUAGE = document.createElement('h3')
+
+BODY.appendChild(TITLE)
+document.querySelector('h1').innerHTML = 'RSS Virtual keyboard by Svibex';
 
 BODY.appendChild(textArea)
 textArea.classList.add('textarea')
+
 BODY.appendChild(keyboard)
+keyboard.classList.add('keyboard')
+
+BODY.appendChild(DESCRIPTION)
+document.querySelector('h2').innerHTML = 'Клавиатура создана в операционной системе Windows';
+
+BODY.appendChild(CHANGELANGUAGE)
+document.querySelector('h3').innerHTML = 'Для переключения языка комбинация: левыe alt + shift';
 
 function changeLanguage() {
     lang === 'rus' ? lang = 'eng' : lang = 'rus'
