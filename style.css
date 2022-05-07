@@ -1,3 +1,10 @@
+@font-face {
+    font-family: "Lack";
+    src: url("Lack-Regular.otf") format("truetype");
+    font-style: normal;
+    font-weight: 400;
+}
+
 html {
     background: #033069;
 }
@@ -6,6 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: Lack, sans-serif;
 }
 
 .textarea {
