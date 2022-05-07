@@ -52,12 +52,12 @@ const keys = [
         eng: {upperCase: '+', lowerCase: '='},
         keyCode: 'Equal'
     }, {
-        rus: {upperCase: 'Backspace', lowerCase: 'Backspace'},
-        eng: {upperCase: 'Backspace', lowerCase: 'Backspace'},
+        rus: {upperCase: '← Backspace', lowerCase: '← Backspace'},
+        eng: {upperCase: '← Backspace', lowerCase: '← Backspace'},
         keyCode: 'Backspace'
     }], [{
-        rus: {upperCase: 'Tab', lowerCase: 'Tab'},
-        eng: {upperCase: 'Tab', lowerCase: 'Tab'},
+        rus: {upperCase: 'Tab ↹', lowerCase: 'Tab ↹'},
+        eng: {upperCase: 'Tab ↹', lowerCase: 'Tab ↹'},
         keyCode: 'Tab'
     }, {
         rus: {upperCase: 'Й', lowerCase: 'й'},
@@ -108,8 +108,8 @@ const keys = [
         eng: {upperCase: '}', lowerCase: ']'},
         keyCode: 'BracketRight'
     }, {
-        rus: {upperCase: '/', lowerCase: ''},
-        eng: {upperCase: '|', lowerCase: ''},
+        rus: {upperCase: '/', lowerCase: '&#92;'},
+        eng: {upperCase: '|', lowerCase: '&#92;'},
         keyCode: 'Backslash'
     }, {
         rus: {upperCase: 'Del', lowerCase: 'Del'},
@@ -162,16 +162,16 @@ const keys = [
         keyCode: 'Semicolon'
     }, {
         rus: {upperCase: 'Э', lowerCase: 'э'},
-        eng: {upperCase: '"', lowerCase: ''},
+        eng: {upperCase: '"', lowerCase: '&apos;'},
         keyCode: 'Quote'
     }, {
-        rus: {upperCase: 'Enter', lowerCase: 'Enter'},
-        eng: {upperCase: 'Enter', lowerCase: 'Enter'},
+        rus: {upperCase: '↵ Enter', lowerCase: '↵ Enter'},
+        eng: {upperCase: '↵ Enter', lowerCase: '↵ Enter'},
         keyCode: 'Enter'
     },],
     [{
-        rus: {upperCase: 'Shift', lowerCase: 'Shift'},
-        eng: {upperCase: 'Shift', lowerCase: 'Shift'},
+        rus: {upperCase: '⇑ Shift', lowerCase: '⇑ Shift'},
+        eng: {upperCase: '⇑ Shift', lowerCase: '⇑ Shift'},
         keyCode: 'ShiftLeft'
     }, {
         rus: {upperCase: 'Я', lowerCase: 'я'},
@@ -218,8 +218,8 @@ const keys = [
         eng: {upperCase: '▲', lowerCase: '▲'},
         keyCode: 'ArrowUp'
     }, {
-        rus: {upperCase: 'Shift', lowerCase: 'Shift'},
-        eng: {upperCase: 'Shift', lowerCase: 'Shift'},
+        rus: {upperCase: '⇑ Shift', lowerCase: '⇑ Shift'},
+        eng: {upperCase: '⇑ Shift', lowerCase: '⇑ Shift'},
         keyCode: 'ShiftRight'
     },],
     [{
@@ -227,16 +227,16 @@ const keys = [
         eng: {upperCase: 'Ctrl', lowerCase: 'Ctrl'},
         keyCode: 'ControlLeft'
     }, {
-        rus: {upperCase: 'Ru', lowerCase: 'Ru'},
-        eng: {upperCase: 'En', lowerCase: 'En'},
+        rus: {upperCase: 'Win', lowerCase: 'Win'},
+        eng: {upperCase: 'Win', lowerCase: 'Win'},
         keyCode: 'langKey'
     }, {
         rus: {upperCase: 'Alt', lowerCase: 'Alt'},
         eng: {upperCase: 'Alt', lowerCase: 'Alt'},
         keyCode: 'AltLeft'
     }, {
-        rus: {upperCase: '', lowerCase: ''},
-        eng: {upperCase: '', lowerCase: ''},
+        rus: {upperCase: '&emsp;', lowerCase: '&emsp;'},
+        eng: {upperCase: '&emsp;', lowerCase: '&emsp;'},
         keyCode: 'Space'
     }, {
         rus: {upperCase: 'Alt', lowerCase: 'Alt'},
@@ -270,6 +270,7 @@ const textArea = document.createElement('textarea')
 keyboard.classList.add('keyboard')
 
 BODY.appendChild(textArea)
+textArea.classList.add('textarea')
 BODY.appendChild(keyboard)
 
 function changeLanguage() {

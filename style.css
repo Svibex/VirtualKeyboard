@@ -8,6 +8,12 @@ body {
     align-items: center;
 }
 
+.textarea {
+    width: 1010px;
+    height: 260px;
+    margin: 10px;
+}
+
 .keyboard {
     display: flex;
     flex-direction: column;
@@ -28,6 +34,9 @@ body {
     border: 1px solid #1bd1fc;
     color: #f3fbff;
     background-color: #014b98;
+    flex-grow: 1;
+    margin: 5px;
+    text-align: center;
 }
 
 .hidden {
