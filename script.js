@@ -1,8 +1,3 @@
-const BODY = document.querySelector('body')
-const keyboard = document.createElement('div')
-
-BODY.appendChild(keyboard)
-
 const keys = [
     [{
         rus: {upperCase: 'Ё', lowerCase: 'ё'},
@@ -265,3 +260,80 @@ const keys = [
         keyCode: 'ControlRight'
     }],
 ];
+
+let lang = localStorage.getItem('lang') || 'rus';
+let capsLock = 'lowerCase';
+const BODY = document.querySelector('body')
+const keyboard = document.createElement('div')
+const textArea = document.createElement('textarea')
+keyboard.classList.add('keyboard')
+
+BODY.appendChild(textArea)
+BODY.appendChild(keyboard)
+
+function changeLanguage() {
+    lang === 'rus' ? lang = 'eng' : lang = 'rus'
+    localStorage.setItem('lang', lang)
+    const nodeList = document.querySelectorAll(".rus, .eng")
+    for(let node of nodeList) {
+      node.classList.toggle('hidden')
+    }
+}
+
+    for (let i=0; i<keys.length; i++) {
+        let row = document.createElement('div')
+        row.classList.add('row')
+        for (let j=0;j<keys[i].length;j++) {
+            let key = document.createElement('div')
+            key.classList.add('key')
+            key.innerHTML = `
+            <div class="rus ${lang === "rus" ? '' : 'hidden'}">
+                <div class="upperCase ${capsLock === "upperCase" ? '' : 'hidden'}">${keys[i][j].rus.upperCase}</div>
+                <div class="lowerCase ${capsLock === "lowerCase" ? '' : 'hidden'}">${keys[i][j].rus.lowerCase}</div>
+            </div>
+            <div class="eng ${lang === "eng" ? '' : 'hidden'}">
+                <div class="upperCase ${capsLock === "upperCase" ? '' : 'hidden'}">${keys[i][j].eng.upperCase}</div>
+                <div class="lowerCase ${capsLock === "lowerCase" ? '' : 'hidden'}">${keys[i][j].eng.lowerCase}</div>
+            </div>
+            `
+
+            row.appendChild(key)
+        }
+        keyboard.appendChild(row)
+    }
+
+function runOnKeys(func, ...codes) {
+    let pressed = new Set();
+
+    document.addEventListener('keydown', function(event) {
+        console.log(event);
+        pressed.add(event.code);
+
+        for (let code of codes) { // все ли клавиши из набора нажаты?
+            if (!pressed.has(code)) {
+                return;
+            }
+        }
+        pressed.clear();
+
+        func();
+    });
+
+    document.addEventListener('keyup', function(event) {
+        pressed.delete(event.code);
+    });
+
+}
+
+runOnKeys(
+    () =>
+        changeLanguage(),
+    "ShiftLeft",
+    "AltLeft"
+);
+
+textArea.addEventListener('input', e => value = e.target.value);
+onInput = () => textArea.value = value;
+
+
+

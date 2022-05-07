@@ -1,0 +1,27 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1300px;
+}
+
+.row {
+    display: flex;
+}
+
+.key {
+    height: 20px;
+    background-color: yellow;
+    margin: 10px;
+    padding: 10px;
+}
+
+.hidden {
+    display: none;
+}
