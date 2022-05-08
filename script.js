@@ -112,8 +112,8 @@ const keys = [
         eng: {upperCase: '|', lowerCase: '&#92;'},
         keyCode: 'Backslash'
     }, {
-        rus: {upperCase: 'Delete', lowerCase: 'Delete'},
-        eng: {upperCase: 'Delete', lowerCase: 'Delete'},
+        rus: {upperCase: '&#8594; Delete', lowerCase: '&#8594; Delete'},
+        eng: {upperCase: '&#8594; Delete', lowerCase: '&#8594; Delete'},
         keyCode: 'Delete'
     },],
     [{
@@ -284,7 +284,7 @@ BODY.appendChild(DESCRIPTION)
 document.querySelector('h2').innerHTML = 'Клавиатура создана в операционной системе Windows';
 
 BODY.appendChild(CHANGELANGUAGE)
-document.querySelector('h3').innerHTML = 'Для переключения языка комбинация: левыe alt + shift';
+document.querySelector('h3').innerHTML = 'Для переключения языка комбинация: левыe Alt + Shift';
 
 function changeLanguage() {
     lang === 'rus' ? lang = 'eng' : lang = 'rus'
@@ -295,12 +295,23 @@ function changeLanguage() {
     }
 }
 
+function changeCase() {
+    capsLock === 'lowerCase' ? capsLock = 'upperCase' : capsLock = 'lowerCase'
+    const nodeList = document.querySelectorAll(".upperCase, .lowerCase")
+    for(let node of nodeList) {
+        node.classList.toggle('hidden')
+    }
+}
+
     for (let i=0; i<keys.length; i++) {
         let row = document.createElement('div')
         row.classList.add('row')
         for (let j=0;j<keys[i].length;j++) {
             let key = document.createElement('div')
             key.classList.add('key')
+            key.setAttribute('data', keys[i][j].keyCode)
+            key.addEventListener('mousedown', onMouseDown)
+            key.addEventListener('mouseup', onMouseUp)
             key.innerHTML = `
             <div class="rus ${lang === "rus" ? '' : 'hidden'}">
                 <div class="upperCase ${capsLock === "upperCase" ? '' : 'hidden'}">${keys[i][j].rus.upperCase}</div>
@@ -311,29 +322,43 @@ function changeLanguage() {
                 <div class="lowerCase ${capsLock === "lowerCase" ? '' : 'hidden'}">${keys[i][j].eng.lowerCase}</div>
             </div>
             `
-
             row.appendChild(key)
         }
         keyboard.appendChild(row)
     }
 
 textArea.addEventListener('input', e => value = e.target.value);
+const keyNodeList = document.querySelectorAll('.key');
 onInput = () => textArea.value = value;
 
-keyboard.addEventListener('click', e => {
-    console.log(e.target.innerText);
+function onMouseDown(e) {
+    if (e.currentTarget.attributes[1].value === 'CapsLock') {
+        document.querySelector(`[data=${e.currentTarget.attributes[1].value}]`).classList.toggle('active')
+        changeCase()
+    }
+    else {
+    const target = e.currentTarget.attributes[1].value;
+    document.querySelector(`[data=${target}]`).classList.add('active')
     value += e.target.innerText;
     onInput();
-});
+    }
+}
+
+function onMouseUp() {
+        for (let key of keyNodeList) {
+            if (key.attributes[1].value !== 'CapsLock') {
+                key.classList.remove('active')
+            }
+        }
+}
 
 function runOnKeys(func, ...codes) {
     let pressed = new Set();
 
     document.addEventListener('keydown', function(event) {
-        console.log(event);
         pressed.add(event.code);
 
-        for (let code of codes) { // все ли клавиши из набора нажаты?
+        for (let code of codes) {
             if (!pressed.has(code)) {
                 return;
             }
@@ -356,5 +381,24 @@ runOnKeys(
     "AltLeft"
 );
 
+document.addEventListener('keydown', e => {
+    console.log(e.code);
+    if (e.code === 'CapsLock') {
+        document.querySelector(`[data=${e.code}]`).classList.toggle('active')
+        changeCase()
+    }
+    else {
+        document.querySelector(`[data=${e.code}]`).classList.add('active')
+        textArea.setAttribute('autofocus', 'true')
+    }
+})
 
+document.addEventListener('keyup', e => {
+    if (e.code === 'CapsLock') {
+        return
+    }
+    else {
+        document.querySelector(`[data=${e.code}]`).classList.remove('active')
+    }
+})
 
