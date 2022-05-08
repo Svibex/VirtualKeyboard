@@ -351,19 +351,66 @@ const keyNodeList = document.querySelectorAll('.key');
 onInput = () => textArea.value = value;
 
 function onMouseDown(e) {
-    if (e.currentTarget.attributes[1].value === 'CapsLock') {
-        document.querySelector(`[data=${e.currentTarget.attributes[1].value}]`).classList.toggle('active')
-        changeCase()
-    }
-    else {
-    const target = e.currentTarget.attributes[1].value;
-    document.querySelector(`[data=${target}]`).classList.add('active')
-    value += e.target.innerText;
-    onInput();
+    let key = e.currentTarget;
+    let keyCode = key.attributes[1].value;
+    switch (keyCode) {
+            case 'CapsLock': {
+                document.querySelector(`[data=${keyCode}]`).classList.toggle('active')
+                changeCase()
+                break;
+            }
+            case 'Backspace': {
+                if (textArea.selectionStart === textArea.selectionEnd) {
+                    value = value.substring(0, value.length - 1);
+                } else {
+                    // Adding an option to delete the selected text area
+                    textArea.setRangeText("", textArea.selectionStart, textArea.selectionEnd, "end");
+                }
+                onInput();
+                break;
+            }
+            case 'Tab': {
+                value = value + '   ';
+                onInput();
+                break;
+            }
+            case 'ShiftLeft':
+            case 'ShiftRight': {
+                changeCase();
+                break;
+            }
+            case 'Enter': {
+                value = value + '\n';
+                break;
+            }
+            case 'AltLeft':
+            case 'AltRight':
+            case 'ControlLeft':
+            case 'ControlRight': {
+                onInput();
+                break;
+            }
+            case 'Delete': {
+                if (textArea.selectionStart === textArea.selectionEnd) {
+                    textArea.setRangeText("", textArea.selectionStart, textArea.selectionStart + 1, "end");
+                } else {
+                    // Adding an option to delete the selected text area
+                    textArea.setRangeText("", textArea.selectionStart, textArea.selectionEnd, "end");
+                }
+                break;
+            }
+            default: {
+                value += e.target.innerText;
+                onInput();
+        }
+
+    document.querySelector(`[data=${keyCode}]`).classList.add('active')
     }
 }
 
-function onMouseUp() {
+function onMouseUp(e) {
+    let keyNode = e.currentTarget.attributes[1].value;
+        if(keyNode === 'ShiftLeft' || keyNode === 'ShiftRight') changeCase()
         for (let key of keyNodeList) {
             if (key.attributes[1].value !== 'CapsLock') {
                 key.classList.remove('active')
