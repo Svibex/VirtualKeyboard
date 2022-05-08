@@ -389,7 +389,7 @@ document.addEventListener('keydown', e => {
     }
     else {
         document.querySelector(`[data=${e.code}]`).classList.add('active')
-        textArea.setAttribute('autofocus', 'true')
+        textArea.focus()
     }
 })
 
