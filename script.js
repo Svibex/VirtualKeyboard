@@ -284,7 +284,7 @@ BODY.appendChild(DESCRIPTION)
 document.querySelector('h2').innerHTML = 'Клавиатура создана в операционной системе Windows';
 
 BODY.appendChild(CHANGELANGUAGE)
-document.querySelector('h3').innerHTML = 'Для переключения языка комбинация: левыe Alt + Shift';
+document.querySelector('h3').innerHTML = 'Для переключения языка комбинация: левыe Ctrl + Alt';
 
 function changeLanguage() {
     lang === 'rus' ? lang = 'eng' : lang = 'rus'
@@ -300,6 +300,24 @@ function changeCase() {
     const nodeList = document.querySelectorAll(".upperCase, .lowerCase")
     for(let node of nodeList) {
         node.classList.toggle('hidden')
+    }
+}
+
+function addClassForKeys(element) {
+    let currentKey = element.attributes[1].value
+    if (currentKey === 'Tab' || currentKey === 'Enter' || currentKey === 'Delete' ||
+    currentKey === 'ControlLeft' ||  currentKey === 'ControlRight') {
+        element.classList.add('keyWidthShort')
+    }
+    if (currentKey === 'ShiftLeft' || currentKey === 'ShiftRight' ||
+    currentKey === 'Backspace' || currentKey === 'CapsLock') {
+        element.classList.add('keyWidthMiddle')
+    }
+    if (currentKey === 'Space') {
+        element.classList.add('keyWidthLong')
+    }
+    else {
+        element.classList.add('keyWidthCommon')
     }
 }
 
@@ -322,6 +340,7 @@ function changeCase() {
                 <div class="lowerCase ${capsLock === "lowerCase" ? '' : 'hidden'}">${keys[i][j].eng.lowerCase}</div>
             </div>
             `
+            addClassForKeys(key)
             row.appendChild(key)
         }
         keyboard.appendChild(row)
@@ -352,53 +371,48 @@ function onMouseUp() {
         }
 }
 
-function runOnKeys(func, ...codes) {
+function runOnKeys(langCodes, caseCodes) {
     let pressed = new Set();
 
-    document.addEventListener('keydown', function(event) {
-        pressed.add(event.code);
-
-        for (let code of codes) {
+    document.addEventListener('keydown', function(e) {
+        console.log(langCodes, caseCodes, e.code);
+        textArea.focus()
+        if(pressed.has(e.code)) return;
+        pressed.add(e.code);
+        const node = document.querySelector(`[data=${e.code}]`);
+        if (e.code === 'CapsLock') {
+            node.classList.toggle('active')
+        } else {
+            node.classList.add('active');
+        }
+        for (let code of caseCodes) {
+            if (pressed.has(code)) {
+                changeCase()
+                return;
+            }
+        }
+        for (let code of langCodes) {
             if (!pressed.has(code)) {
                 return;
             }
         }
         pressed.clear();
+        changeLanguage();
+    })
 
-        func();
-    });
-
-    document.addEventListener('keyup', function(event) {
-        pressed.delete(event.code);
+    document.addEventListener('keyup', function(e) {
+        const node = document.querySelector(`[data=${e.code}]`);
+        if (e.code !== 'CapsLock') {
+            node.classList.remove('active')
+            if (caseCodes.includes(e.code)) changeCase()
+        }
+        pressed.delete(e.code);
     });
 
 }
 
 runOnKeys(
-    () =>
-        changeLanguage(),
-    "ShiftLeft",
-    "AltLeft"
+    ["ControlLeft", "AltLeft"],
+    ['ShiftLeft', 'ShiftRight', 'CapsLock']
 );
-
-document.addEventListener('keydown', e => {
-    console.log(e.code);
-    if (e.code === 'CapsLock') {
-        document.querySelector(`[data=${e.code}]`).classList.toggle('active')
-        changeCase()
-    }
-    else {
-        document.querySelector(`[data=${e.code}]`).classList.add('active')
-        textArea.focus()
-    }
-})
-
-document.addEventListener('keyup', e => {
-    if (e.code === 'CapsLock') {
-        return
-    }
-    else {
-        document.querySelector(`[data=${e.code}]`).classList.remove('active')
-    }
-})
 

@@ -48,22 +48,23 @@ h2, h3 {
 
 .row {
     display: flex;
-    width: 1000px;
     justify-content: space-between;
     align-items: center;
+    vertical-align: middle;
+    width: 1000px;
 }
 
 .key {
     height: 20px;
-    min-width: 50px;
-    padding: 20px 0;
     border: 2px solid #1bd1fc;
     background-color: #014b98;
     border-radius: 5px;
     flex-grow: 1;
-    margin: 5px;
     text-align: center;
-    max-width: 150px;
+    transition: all 0.5s;
+    vertical-align: middle;
+    padding: 16px 5px;
+    margin: 5px;
 }
 
 .key:hover {
@@ -75,8 +76,25 @@ h2, h3 {
     background-color: #1bd1fc !important;
     color: #033069;
     border-radius: 30px;
+    transition: all 0.1s;
 }
 
 .hidden {
     display: none;
+}
+
+.keyWidthCommon {
+    width: 54px;
+}
+
+.keyWidthShort {
+    width: 100px;
+}
+
+.keyWidthMiddle {
+    width: 200px;
+}
+
+.keyWidthLong {
+    width: 540px;
 }
