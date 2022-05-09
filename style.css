@@ -49,6 +49,15 @@ h2, h3 {
     margin: 10px;
     font-size: 22px;
     box-shadow: 0 0 10px #42a2ba;
+    outline: none;
+}
+
+.textarea:active {
+    outline: none;
+}
+
+.textarea:focus {
+    outline: none;
 }
 
 .keyboard {
